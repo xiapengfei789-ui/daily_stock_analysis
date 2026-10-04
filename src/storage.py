@@ -310,7 +310,7 @@ class FundamentalSnapshot(Base):
 
 
 class ScreeningRun(Base):
-    """A completed built-in screening run persisted by DSA."""
+    """A completed built-in screening run persisted by 盘研高参."""
 
     __tablename__ = 'screening_runs'
 

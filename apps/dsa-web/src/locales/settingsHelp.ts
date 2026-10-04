@@ -39,7 +39,7 @@ const settingsHelpZhCN: SettingsHelpMap = {
     usage: '通常保持“默认模型配置”。只有在本机已安装并登录对应 CLI，且你信任它处理分析内容时，才选择本地 CLI 生成方式（实验）。',
     valueNotes: [
       '本地 CLI 生成方式是本机启动的命令行程序，不等于离线模型；背后的服务可能处理股票代码、新闻、持仓上下文、分析请求和报告草稿。',
-      'Docker、云服务器、CI 不天然拥有你本机的登录状态；DSA 不读取 Codex/Claude/OpenCode 登录凭据文件，但对应 CLI 自己可能使用它的登录状态。',
+      'Docker、云服务器、CI 不天然拥有你本机的登录状态；盘研高参 不读取 Codex/Claude/OpenCode 登录凭据文件，但对应 CLI 自己可能使用它的登录状态。',
     ],
     impact: ['影响普通分析、大盘复盘和文本生成入口，不改变问股助手的工具执行规则。'],
     notes: [
@@ -67,8 +67,8 @@ const settingsHelpZhCN: SettingsHelpMap = {
   'settings.ai_model.OPENCODE_CLI_MODEL': {
     title: 'OpenCode CLI 模型',
     showFieldKey: true,
-    summary: '可选：指定 DSA 调用 OpenCode run 时传给 --model 的模型名。',
-    usage: '仅在“分析生成方式”选择 OpenCode CLI 时生效。留空时 DSA 不传 --model，使用你本机 OpenCode 的默认模型配置。',
+    summary: '可选：指定 盘研高参 调用 OpenCode run 时传给 --model 的模型名。',
+    usage: '仅在“分析生成方式”选择 OpenCode CLI 时生效。留空时 盘研高参 不传 --model，使用你本机 OpenCode 的默认模型配置。',
     valueNotes: [
       '模型是否可用、如何认证由你本机的 OpenCode 配置负责。',
       '配置时该值会作为单个 argv 参数传给 OpenCode，不能包含空白或 shell 元字符。',
@@ -355,7 +355,7 @@ const settingsHelpZhCN: SettingsHelpMap = {
     title: 'Futu OpenD 地址',
     summary: '配置 Futu OpenD 服务地址。留空时不启用 Futu 数据源。',
     usage: '填写 IPv4 地址或可解析到 IPv4 的主机名。',
-    valueNotes: ['OpenD 必须允许 DSA 容器访问。'],
+    valueNotes: ['OpenD 必须允许 盘研高参 容器访问。'],
     impact: ['影响港股 Futu 实时行情、历史行情和基本面数据访问。'],
     notes: ['这是服务地址，不是 Futu 账号密码。'],
   },
@@ -364,8 +364,8 @@ const settingsHelpZhCN: SettingsHelpMap = {
     summary: '配置 Futu OpenD TCP 端口。',
     usage: '填写 1 到 65535 之间的端口，默认 11111。',
     valueNotes: ['端口必须与 OpenD 实际监听端口一致。'],
-    impact: ['影响 DSA 与 Futu OpenD 的连接。'],
-    notes: ['修改后通常需要重启 DSA 服务以重新建立连接。'],
+    impact: ['影响 盘研高参 与 Futu OpenD 的连接。'],
+    notes: ['修改后通常需要重启 盘研高参 服务以重新建立连接。'],
   },
   'settings.data_source.FUTU_HK_REALTIME_SOURCE_PRIORITY': {
     title: 'Futu 港股实时数据源优先级',
@@ -697,11 +697,11 @@ const settingsHelpZhCN: SettingsHelpMap = {
   'settings.system.schedule': {
     title: '定时任务',
     summary: '控制是否启用每日定时分析以及启动时是否立即执行一次。',
-    usage: 'SCHEDULE_TIME 使用 HH:MM 24 小时格式；SCHEDULE_TIMES 可配置逗号分隔的多个 HH:MM 时间点；SCHEDULE_ENABLED 控制 runtime scheduler 是否启用；DSA_RUNTIME_SCHEDULER_TIMEOUT_SECONDS 控制单次 Web/API 定时分析的硬超时，默认 2700 秒、最小 60 秒。',
+    usage: 'SCHEDULE_TIME 使用 HH:MM 24 小时格式；SCHEDULE_TIMES 可配置逗号分隔的多个 HH:MM 时间点；SCHEDULE_ENABLED 控制 runtime scheduler 是否启用；盘研高参_RUNTIME_SCHEDULER_TIMEOUT_SECONDS 控制单次 Web/API 定时分析的硬超时，默认 2700 秒、最小 60 秒。',
     valueNotes: [
       '已运行的 schedule 模式会在下一轮调度检查中读取新的 SCHEDULE_TIME / SCHEDULE_TIMES 并重建 daily jobs。',
       'WebUI/API/Desktop 长运行进程保存 SCHEDULE_ENABLED、SCHEDULE_TIME 或 SCHEDULE_TIMES 后会按新配置启停或重建 runtime scheduler。',
-      '修改 DSA_RUNTIME_SCHEDULER_TIMEOUT_SECONDS 后，下一次分析会使用新值，无需重建 daily jobs；超时会终止独立分析进程。',
+      '修改 盘研高参_RUNTIME_SCHEDULER_TIMEOUT_SECONDS 后，下一次分析会使用新值，无需重建 daily jobs；超时会终止独立分析进程。',
       '定时任务触发时会读取当前保存的 STOCK_LIST。',
     ],
     impact: ['影响 schedule 模式下自动分析频率、启动行为和通知推送时间。'],
@@ -850,17 +850,17 @@ const settingsHelpZhCN: SettingsHelpMap = {
   'settings.agent.AGENT_BACKEND': {
     title: '问股生成方式',
     showFieldKey: false,
-    summary: '选择问股 Chat 使用默认模型配置，还是调用运行 DSA 设备上的 Codex。',
-    usage: '通常保持“自动（推荐）”。自动模式不会启用实验性的 Codex；只有确认运行 DSA 的设备已安装并登录 Codex 后，才选择 Codex 本地 Agent。',
+    summary: '选择问股 Chat 使用默认模型配置，还是调用运行 盘研高参 设备上的 Codex。',
+    usage: '通常保持“自动（推荐）”。自动模式不会启用实验性的 Codex；只有确认运行 盘研高参 的设备已安装并登录 Codex 后，才选择 Codex 本地 Agent。',
     valueNotes: [
       '“自动（推荐）”与“默认模型配置”都继续使用现有模型和 API 配置。',
       '“Codex 本地 Agent（实验）”目前只支持单 Agent 问股，不支持 Codex Multi Agent 或 Codex Deep Research。',
-      'Codex 本地 Agent 当前支持 macOS、Linux，以及完整运行于 WSL 的 DSA 后端；暂不支持原生 Windows 后端。',
+      'Codex 本地 Agent 当前支持 macOS、Linux，以及完整运行于 WSL 的盘研高参后端；暂不支持原生 Windows 后端。',
       '本地 Agent 不等于离线模型；股票问题和工具结果可能由 Codex 自身配置的服务处理。',
     ],
     impact: ['只影响问股 Chat，不改变普通报告、定时分析、现有 Multi Agent 或 Deep Research。'],
     notes: [
-      'DSA 不读取或保存 Codex 登录凭据，Codex 进程使用自己的登录状态。',
+      '盘研高参 不读取或保存 Codex 登录凭据，Codex 进程使用自己的登录状态。',
       '设置页状态只检查配置、Codex 命令和所需协议，不会登录、调用模型或读取股票数据；显示“可以尝试”不代表已验证可用。',
       '保存后可直接在问股页提问；第一次问题就是第一次真实执行，若 Codex 登录或服务不可用，页面会保留问题并显示原因。',
       '想恢复原有行为，选择“自动（推荐）”并保存。',
@@ -1292,7 +1292,7 @@ const settingsHelpEnUS: SettingsHelpMap = {
     usage: 'Usually keep Default model settings. Choose a local CLI backend only when the corresponding CLI is installed and logged in on this machine and you trust it to handle analysis content.',
     valueNotes: [
       'Local CLI backends are local command-line programs, not offline models. The service behind them may process stock symbols, news, position context, analysis requests, and report drafts.',
-      'Docker, cloud servers, and CI do not automatically have your local login state. DSA does not read Codex/Claude/OpenCode credential files, but the corresponding CLI itself may use its login state.',
+      'Docker, cloud servers, and CI do not automatically have your local login state. 盘研高参 does not read Codex/Claude/OpenCode credential files, but the corresponding CLI itself may use its login state.',
     ],
     impact: ['Affects regular analysis, market review, and text generation entry points. It does not change how the ask-stock assistant runs tools.'],
     notes: [
@@ -1321,7 +1321,7 @@ const settingsHelpEnUS: SettingsHelpMap = {
     title: 'OpenCode CLI Model',
     showFieldKey: true,
     summary: 'Optional model name passed to OpenCode run through --model.',
-    usage: 'Only applies when Analysis Generation Method is OpenCode CLI. Leave it empty and DSA will not pass --model, so OpenCode uses its local default model configuration.',
+    usage: 'Only applies when Analysis Generation Method is OpenCode CLI. Leave it empty and 盘研高参 will not pass --model, so OpenCode uses its local default model configuration.',
     valueNotes: [
       'Model availability and authentication are handled by your local OpenCode setup.',
       'When set, the value is passed as one argv token and must not contain whitespace or shell metacharacters.',
@@ -1551,7 +1551,7 @@ const settingsHelpEnUS: SettingsHelpMap = {
     title: 'Futu OpenD Host',
     summary: 'Configures the Futu OpenD service address. Leave empty to disable Futu.',
     usage: 'Use an IPv4 address or a hostname resolving to IPv4.',
-    valueNotes: ['The OpenD service must be reachable from the DSA container.'],
+    valueNotes: ['The OpenD service must be reachable from the 盘研高参 container.'],
     impact: ['Affects Futu HK realtime, historical, and fundamental data access.'],
     notes: ['This is a service address, not a Futu account credential.'],
   },
@@ -1560,8 +1560,8 @@ const settingsHelpEnUS: SettingsHelpMap = {
     summary: 'Configures the Futu OpenD TCP port.',
     usage: 'Use a port from 1 to 65535; the default is 11111.',
     valueNotes: ['The port must match the OpenD listener.'],
-    impact: ['Affects the DSA connection to Futu OpenD.'],
-    notes: ['Restarting DSA is normally required after changing it.'],
+    impact: ['Affects the 盘研高参 connection to Futu OpenD.'],
+    notes: ['Restarting 盘研高参 is normally required after changing it.'],
   },
   'settings.data_source.FUTU_HK_REALTIME_SOURCE_PRIORITY': {
     title: 'Futu HK Realtime Source Priority',
@@ -1909,11 +1909,11 @@ const settingsHelpEnUS: SettingsHelpMap = {
   'settings.system.schedule': {
     title: 'Schedule',
     summary: 'Controls daily scheduled analysis and whether startup runs immediately.',
-    usage: 'SCHEDULE_TIME uses HH:MM 24-hour format. SCHEDULE_TIMES accepts comma-separated HH:MM values. SCHEDULE_ENABLED controls whether the runtime scheduler is enabled. DSA_RUNTIME_SCHEDULER_TIMEOUT_SECONDS sets the hard timeout for each Web/API scheduled analysis (default 2700 seconds, minimum 60).',
+    usage: 'SCHEDULE_TIME uses HH:MM 24-hour format. SCHEDULE_TIMES accepts comma-separated HH:MM values. SCHEDULE_ENABLED controls whether the runtime scheduler is enabled. 盘研高参_RUNTIME_SCHEDULER_TIMEOUT_SECONDS sets the hard timeout for each Web/API scheduled analysis (default 2700 seconds, minimum 60).',
     valueNotes: [
       'An already-running schedule mode reads new SCHEDULE_TIME / SCHEDULE_TIMES values on the next scheduler check and rebuilds the daily jobs.',
       'Long-running WebUI/API/Desktop processes start, stop, or rebuild the runtime scheduler after saving SCHEDULE_ENABLED, SCHEDULE_TIME, or SCHEDULE_TIMES.',
-      'After DSA_RUNTIME_SCHEDULER_TIMEOUT_SECONDS changes, the next analysis uses the new value without rebuilding daily jobs; the isolated analysis process is terminated on timeout.',
+      'After 盘研高参_RUNTIME_SCHEDULER_TIMEOUT_SECONDS changes, the next analysis uses the new value without rebuilding daily jobs; the isolated analysis process is terminated on timeout.',
       'Scheduled runs read the currently saved STOCK_LIST.',
     ],
     impact: ['Affects automatic analysis frequency, startup behavior, and notification timing in schedule mode.'],
@@ -2062,17 +2062,17 @@ const settingsHelpEnUS: SettingsHelpMap = {
   'settings.agent.AGENT_BACKEND': {
     title: 'Ask-Stock Method',
     showFieldKey: false,
-    summary: 'Choose whether ask-stock Chat uses the default model configuration or Codex on the device running DSA.',
-    usage: 'Keep Auto (recommended) unless Codex is installed and signed in on the device running DSA. Auto never enables the experimental Codex route.',
+    summary: 'Choose whether ask-stock Chat uses the default model configuration or Codex on the device running 盘研高参.',
+    usage: 'Keep Auto (recommended) unless Codex is installed and signed in on the device running 盘研高参. Auto never enables the experimental Codex route.',
     valueNotes: [
       'Auto (recommended) and Default model settings both keep the existing model and API route.',
       'Codex local Agent (experimental) currently supports single-agent Chat only, not Codex Multi Agent or Codex Deep Research.',
-      'Codex local Agent currently supports macOS, Linux, and a DSA backend running completely inside WSL; native Windows backends are not supported yet.',
+      'Codex local Agent currently supports macOS, Linux, and a 盘研高参 backend running completely inside WSL; native Windows backends are not supported yet.',
       'A local Agent is not an offline model; stock questions and tool results may be processed by services configured in Codex.',
     ],
     impact: ['Only affects ask-stock Chat. Regular reports, scheduled analysis, existing Multi Agent, and Deep Research stay unchanged.'],
     notes: [
-      'DSA does not read or store Codex credentials. The Codex process uses its own sign-in state.',
+      '盘研高参 does not read or store Codex credentials. The Codex process uses its own sign-in state.',
       'Settings checks only configuration, the Codex command, and the required protocol. It does not sign in, call a model, or read stock data; “Can try” is not a verified-success claim.',
       'After saving, ask directly in Chat. The first question is the first real execution; if sign-in or the Codex service fails, Chat preserves the question and explains what happened.',
       'To restore the original behavior, select Auto (recommended) and save.',

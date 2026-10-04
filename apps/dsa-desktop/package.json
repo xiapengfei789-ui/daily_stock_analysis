@@ -1,5 +1,5 @@
 {
-  "name": "daily-stock-analysis-desktop",
+  "name": "panyan-gaocan-desktop",
   "version": "3.21.0",
   "private": true,
   "main": "main.js",
@@ -16,8 +16,8 @@
     "electron-builder": "^24.13.3"
   },
   "build": {
-    "appId": "com.daily-stock-analysis.desktop",
-    "productName": "Daily Stock Analysis",
+    "appId": "com.panyangaocan.desktop",
+    "productName": "盘研高参",
     "directories": {
       "output": "dist"
     },
@@ -39,11 +39,11 @@
     ],
     "win": {
       "target": "nsis",
-      "artifactName": "daily-stock-analysis-windows-installer-v${version}.${ext}",
+      "artifactName": "panyan-gaocan-windows-installer-v${version}.${ext}",
       "publish": [
         {
           "provider": "github",
-          "owner": "ZhuLinsen",
+          "owner": "xiapengfei789-ui",
           "repo": "daily_stock_analysis"
         }
       ]

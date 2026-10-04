@@ -310,7 +310,7 @@ const ChatPage: React.FC = () => {
 
   // Set page title
   useEffect(() => {
-    document.title = '问股 - DSA';
+    document.title = '问股 - 盘研高参';
   }, []);
 
   useEffect(() => {
