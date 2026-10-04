@@ -2,7 +2,7 @@
 import math
 from PIL import Image, ImageDraw, ImageFont
 
-SIZE = 256
+SIZE = 1024
 OUT_DIR = "apps/dsa-desktop/build"
 FONT = "C:/Windows/Fonts/msyhbd.ttc"
 

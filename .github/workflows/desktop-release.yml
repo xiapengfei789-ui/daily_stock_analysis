@@ -63,6 +63,17 @@ jobs:
           npm version "${VERSION}" --no-git-tag-version --allow-same-version
           node -e "const pkg = require('./package.json'); if (pkg.version !== process.env.VERSION) throw new Error('package version mismatch: ' + pkg.version); console.log('desktop version:', pkg.version);"
 
+      - name: Inject preset API keys into .env.example
+        shell: bash
+        env:
+          PRESET_DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          PRESET_BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
+        run: |
+          set -euo pipefail
+          sed -i "s|^# DEEPSEEK_API_KEY=.*|DEEPSEEK_API_KEY=${PRESET_DEEPSEEK_API_KEY}|" .env.example
+          sed -i "s|^# BOCHA_API_KEYS=.*|BOCHA_API_KEYS=${PRESET_BOCHA_API_KEYS}|" .env.example
+          grep -n "^DEEPSEEK_API_KEY=sk-\|^BOCHA_API_KEYS=sk-" .env.example
+
       - name: Build desktop package (Windows)
         shell: pwsh
         env:
@@ -73,7 +84,7 @@ jobs:
       - name: Prepare release artifact (Windows)
         shell: pwsh
         run: |
-          $expectedInstallerName = "daily-stock-analysis-windows-installer-$env:RELEASE_TAG.exe"
+          $expectedInstallerName = "panyan-gaocan-windows-installer-$env:RELEASE_TAG.exe"
           $installerPath = Join-Path 'apps/dsa-desktop/dist' $expectedInstallerName
           $installerExe = Get-Item -Path $installerPath -ErrorAction SilentlyContinue
           if (-not $installerExe) {
@@ -85,7 +96,7 @@ jobs:
           }
           New-Item -ItemType Directory -Path 'dist/release-assets' -Force | Out-Null
           $exeTarget = "dist/release-assets/$expectedInstallerName"
-          $zipTarget = "dist/release-assets/daily-stock-analysis-windows-noinstall-$env:RELEASE_TAG.zip"
+          $zipTarget = "dist/release-assets/panyan-gaocan-windows-noinstall-$env:RELEASE_TAG.zip"
           Copy-Item -Path $installerExe.FullName -Destination $exeTarget -Force
           Compress-Archive -Path $winUnpacked -DestinationPath $zipTarget -CompressionLevel Optimal -Force
           Get-ChildItem -Path 'apps/dsa-desktop/dist' -File |
@@ -181,6 +192,17 @@ jobs:
           npm version "${VERSION}" --no-git-tag-version --allow-same-version
           node -e "const pkg = require('./package.json'); if (pkg.version !== process.env.VERSION) throw new Error('package version mismatch: ' + pkg.version); console.log('desktop version:', pkg.version);"
 
+      - name: Inject preset API keys into .env.example
+        shell: bash
+        env:
+          PRESET_DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          PRESET_BOCHA_API_KEYS: ${{ secrets.BOCHA_API_KEYS }}
+        run: |
+          set -euo pipefail
+          sed -i "s|^# DEEPSEEK_API_KEY=.*|DEEPSEEK_API_KEY=${PRESET_DEEPSEEK_API_KEY}|" .env.example
+          sed -i "s|^# BOCHA_API_KEYS=.*|BOCHA_API_KEYS=${PRESET_BOCHA_API_KEYS}|" .env.example
+          grep -n "^DEEPSEEK_API_KEY=sk-\|^BOCHA_API_KEYS=sk-" .env.example
+
       - name: Cache Electron binaries
         uses: actions/cache@v5
         with:
@@ -207,7 +229,7 @@ jobs:
           fi
           test -n "$dmg_file"
           mkdir -p dist/release-assets
-          cp "$dmg_file" "dist/release-assets/daily-stock-analysis-macos-${{ matrix.arch }}-${RELEASE_TAG}.dmg"
+          cp "$dmg_file" "dist/release-assets/panyan-gaocan-macos-${{ matrix.arch }}-${RELEASE_TAG}.dmg"
 
       - uses: actions/upload-artifact@v6
         with:
